@@ -1,6 +1,7 @@
 const grpc = require('@grpc/grpc-js')
 const {CalculatorServiceClient} = require('../proto/calculator_grpc_pb')
 const {SumRequest} = require('../proto/sum_pb')
+const {PrimeRequest} = require('../proto/calculator_pb')
 
 function doSum(client){
     console.log("doSum was invoked")
@@ -17,12 +18,24 @@ function doSum(client){
     
 }
 
+function doPrime(client){
+    console.log("doPrime was invoked");
+    const req = new PrimeRequest()
+        .setNum(120)
+    console.log(req)
+    const call = client.primes(req)
+    call.on('data', (res)=> {
+        console.log(`Prime: ${res.getResult()}`);
+    })
+
+}
+
 function main() {
     const creds = grpc.ChannelCredentials.createInsecure()
     const client = new CalculatorServiceClient('0.0.0.0:50051', creds)
 
-    doSum(client);
-
+    // doSum(client);
+    doPrime(client)
     client.close()
 }
 

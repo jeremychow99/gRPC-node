@@ -23,7 +23,7 @@ function main() {
     })
 
     server.addService(CalculatorServiceService, serviceImpl)
-
+    console.log(serviceImpl);
     server.bindAsync(addr, creds, (err, _) => {
         if (err) {
             return cleanup(server)

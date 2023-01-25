@@ -4,6 +4,16 @@ package calculator;
 
 import "sum.proto";
 
+message PrimeRequest {
+    int64 num = 1;
+}
+
+message PrimeResponse {
+    int64 result = 1;
+}
+
+
 service CalculatorService {
     rpc Sum (SumRequest) returns (SumResponse);
+    rpc Primes (PrimeRequest) returns ( stream PrimeResponse);
 }

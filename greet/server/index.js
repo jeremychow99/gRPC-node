@@ -21,9 +21,10 @@ function main() {
         console.log('Caught interrupt signal');
         cleanup(server)
     })
-
+    // serviceImpl is Map of method names to method implementation for the provided service.
+    // in this case, serviceImpl = { greet: [Function (anonymous)] }
+    // console.log(serviceImpl);
     server.addService(GreetServiceService, serviceImpl)
-
     server.bindAsync(addr, creds, (err, _) => {
         if (err) {
             return cleanup(server)
