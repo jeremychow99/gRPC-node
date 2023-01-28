@@ -2,6 +2,8 @@ const grpc = require('@grpc/grpc-js')
 const {CalculatorServiceClient} = require('../proto/calculator_grpc_pb')
 const {SumRequest} = require('../proto/sum_pb')
 const {PrimeRequest} = require('../proto/calculator_pb')
+const {AvgRequest} = require('../proto/avg_pb')
+
 
 function doSum(client){
     console.log("doSum was invoked")
@@ -30,12 +32,35 @@ function doPrime(client){
 
 }
 
+function doAvg(client) {
+    console.log('doAvg was invoked')
+
+    // create an array from 1 to 10
+    const numbers = [...Array(11).keys()].slice(1)
+
+    // call RPC endpoint, it will give a stream
+    const call = client.avg((err, res) => {
+        if (err) {
+            return console.log(err);
+        }
+        console.log(`Avg: ${res.getResult()}`)
+
+    })
+
+    numbers.map((number) => {
+        return new AvgRequest().setNumber(number)
+    }).forEach((req) => call.write(req))
+
+    call.end()
+}
+
 function main() {
     const creds = grpc.ChannelCredentials.createInsecure()
     const client = new CalculatorServiceClient('0.0.0.0:50051', creds)
 
     // doSum(client);
-    doPrime(client)
+    // doPrime(client)
+    doAvg(client)
     client.close()
 }
 

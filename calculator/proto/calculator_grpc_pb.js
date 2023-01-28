@@ -4,27 +4,28 @@
 var grpc = require('@grpc/grpc-js');
 var calculator_pb = require('./calculator_pb.js');
 var sum_pb = require('./sum_pb.js');
+var avg_pb = require('./avg_pb.js');
 
-function serialize_calculator_PrimeRequest(arg) {
-  if (!(arg instanceof calculator_pb.PrimeRequest)) {
-    throw new Error('Expected argument of type calculator.PrimeRequest');
+function serialize_calculator_AvgRequest(arg) {
+  if (!(arg instanceof avg_pb.AvgRequest)) {
+    throw new Error('Expected argument of type calculator.AvgRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_calculator_PrimeRequest(buffer_arg) {
-  return calculator_pb.PrimeRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_calculator_AvgRequest(buffer_arg) {
+  return avg_pb.AvgRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_calculator_PrimeResponse(arg) {
-  if (!(arg instanceof calculator_pb.PrimeResponse)) {
-    throw new Error('Expected argument of type calculator.PrimeResponse');
+function serialize_calculator_AvgResponse(arg) {
+  if (!(arg instanceof avg_pb.AvgResponse)) {
+    throw new Error('Expected argument of type calculator.AvgResponse');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_calculator_PrimeResponse(buffer_arg) {
-  return calculator_pb.PrimeResponse.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_calculator_AvgResponse(buffer_arg) {
+  return avg_pb.AvgResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_calculator_SumRequest(arg) {
@@ -62,16 +63,16 @@ var CalculatorServiceService = exports.CalculatorServiceService = {
     responseSerialize: serialize_calculator_SumResponse,
     responseDeserialize: deserialize_calculator_SumResponse,
   },
-  primes: {
-    path: '/calculator.CalculatorService/Primes',
-    requestStream: false,
-    responseStream: true,
-    requestType: calculator_pb.PrimeRequest,
-    responseType: calculator_pb.PrimeResponse,
-    requestSerialize: serialize_calculator_PrimeRequest,
-    requestDeserialize: deserialize_calculator_PrimeRequest,
-    responseSerialize: serialize_calculator_PrimeResponse,
-    responseDeserialize: deserialize_calculator_PrimeResponse,
+  avg: {
+    path: '/calculator.CalculatorService/Avg',
+    requestStream: true,
+    responseStream: false,
+    requestType: avg_pb.AvgRequest,
+    responseType: avg_pb.AvgResponse,
+    requestSerialize: serialize_calculator_AvgRequest,
+    requestDeserialize: deserialize_calculator_AvgRequest,
+    responseSerialize: serialize_calculator_AvgResponse,
+    responseDeserialize: deserialize_calculator_AvgResponse,
   },
 };
 

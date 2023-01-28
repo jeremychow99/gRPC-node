@@ -3,6 +3,8 @@ syntax = "proto3";
 package calculator;
 
 import "sum.proto";
+import "avg.proto";
+
 
 message PrimeRequest {
     int64 num = 1;
@@ -15,5 +17,5 @@ message PrimeResponse {
 
 service CalculatorService {
     rpc Sum (SumRequest) returns (SumResponse);
-    rpc Primes (PrimeRequest) returns ( stream PrimeResponse);
+    rpc Avg (stream AvgRequest) returns (AvgResponse);
 }
