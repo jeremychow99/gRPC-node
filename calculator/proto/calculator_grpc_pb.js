@@ -5,6 +5,7 @@ var grpc = require('@grpc/grpc-js');
 var calculator_pb = require('./calculator_pb.js');
 var sum_pb = require('./sum_pb.js');
 var avg_pb = require('./avg_pb.js');
+var sqrt_pb = require('./sqrt_pb.js');
 
 function serialize_calculator_AvgRequest(arg) {
   if (!(arg instanceof avg_pb.AvgRequest)) {
@@ -26,6 +27,28 @@ function serialize_calculator_AvgResponse(arg) {
 
 function deserialize_calculator_AvgResponse(buffer_arg) {
   return avg_pb.AvgResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_calculator_SqrtRequest(arg) {
+  if (!(arg instanceof sqrt_pb.SqrtRequest)) {
+    throw new Error('Expected argument of type calculator.SqrtRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_calculator_SqrtRequest(buffer_arg) {
+  return sqrt_pb.SqrtRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_calculator_SqrtResponse(arg) {
+  if (!(arg instanceof sqrt_pb.SqrtResponse)) {
+    throw new Error('Expected argument of type calculator.SqrtResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_calculator_SqrtResponse(buffer_arg) {
+  return sqrt_pb.SqrtResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_calculator_SumRequest(arg) {
@@ -73,6 +96,17 @@ var CalculatorServiceService = exports.CalculatorServiceService = {
     requestDeserialize: deserialize_calculator_AvgRequest,
     responseSerialize: serialize_calculator_AvgResponse,
     responseDeserialize: deserialize_calculator_AvgResponse,
+  },
+  sqrt: {
+    path: '/calculator.CalculatorService/Sqrt',
+    requestStream: false,
+    responseStream: false,
+    requestType: sqrt_pb.SqrtRequest,
+    responseType: sqrt_pb.SqrtResponse,
+    requestSerialize: serialize_calculator_SqrtRequest,
+    requestDeserialize: deserialize_calculator_SqrtRequest,
+    responseSerialize: serialize_calculator_SqrtResponse,
+    responseDeserialize: deserialize_calculator_SqrtResponse,
   },
 };
 

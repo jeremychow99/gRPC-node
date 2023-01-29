@@ -5,6 +5,7 @@ package calculator;
 import "sum.proto";
 import "avg.proto";
 
+import "sqrt.proto";
 
 message PrimeRequest {
     int64 num = 1;
@@ -18,4 +19,5 @@ message PrimeResponse {
 service CalculatorService {
     rpc Sum (SumRequest) returns (SumResponse);
     rpc Avg (stream AvgRequest) returns (AvgResponse);
+    rpc Sqrt (SqrtRequest) returns (SqrtResponse);
 }
