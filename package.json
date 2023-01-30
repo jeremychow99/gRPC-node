@@ -4,15 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "pb:gen": "./scripts/gen.sh greet calculator",
+    "pb:gen": "./scripts/gen.sh greet calculator blog",
     "greet:server": "node greet/server/index.js",
-    "greet:client": "node greet/client/index.js"
+    "greet:client": "node greet/client/index.js",
+    "ssl:gen": "cd ssl && ../scripts/ssl.sh && cd ..",
+    "blog:server": "node blog/server/index.js",
+    "blog:client": "node blog/client/index.js",
+    "blog:db": "cd blog; docker-compose up; cd .."
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@grpc/grpc-js": "^1.8.5",
-    "google-protobuf": "^3.21.2"
+    "@grpc/grpc-js": "^1.8.7",
+    "google-protobuf": "^3.21.2",
+    "mongodb": "^4.13.0"
   },
   "devDependencies": {
     "grpc-tools": "^1.12.3"
